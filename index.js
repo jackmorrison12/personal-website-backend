@@ -34,7 +34,7 @@ app.get('/github', (req,res) => {
       }))
 
       .catch(errors => {
-        res.send({success : false, message: error.message})
+        res.send({success : false, message: "Github API Unavailable"})
       })
 
 });
@@ -57,7 +57,7 @@ app.get('/lastfm', (req,res) => {
       }))
 
       .catch(errors => {
-        res.send({success : false, message: error.message})
+        res.send({success : false, message: "LastFM API Unavailable"})
       })
 
 });
