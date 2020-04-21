@@ -1,0 +1,1 @@
+Rum `heroku local web` to start the REST API locally. It will run on port 5000.

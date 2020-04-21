@@ -13,15 +13,14 @@ app.options('*', cors());
 
 app.get('/', (req, res) => res.send('Working!!!'));
 
-app.get('/last_song', (req,res) => {
+app.get('/stars', (req,res) => {
 
-
-  axios.get('https://api.github.com/repos/jackmorrison12/personal-website').then(resp => {
+  axios.get(`https://api.github.com/repos/${process.env.GITHUB_USERNAME}/personal-website`).then(resp => {
     res.send(resp.data.stargazers_count.toString());
   });
 
 });
 
 app.listen(process.env.PORT || 3000, function() {
-    console.log('server running on port 3000', '');
+    console.log('server running on port 5000', '');
 });
