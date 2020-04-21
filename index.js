@@ -18,8 +18,8 @@ app.get('/github', (req,res) => {
   let one = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/personal-website`
   let two = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/personal-website/stats/contributors`
 
-  const requestOne = axios.get(one);
-  const requestTwo = axios.get(two);
+  const requestOne = axios.get(one, {headers: {"username": `${process.env.GITHUB_API_KEY}`}}); 
+  const requestTwo = axios.get(two, {headers: {"username": `${process.env.GITHUB_API_KEY}`}});
 
   axios.all([requestOne, requestTwo])
       .then(axios.spread((...responses) => {
