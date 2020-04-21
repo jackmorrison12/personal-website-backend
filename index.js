@@ -13,11 +13,27 @@ app.options('*', cors());
 
 app.get('/', (req, res) => res.send('Working!!!'));
 
-app.get('/stars', (req,res) => {
+app.get('/github', (req,res) => {
 
-  axios.get(`https://api.github.com/repos/${process.env.GITHUB_USERNAME}/personal-website`).then(resp => {
-    res.send(resp.data.stargazers_count.toString());
-  });
+  let one = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/personal-website`
+  let two = `https://api.github.com/repos/${process.env.GITHUB_USERNAME}/personal-website/stats/contributors`
+
+  const requestOne = axios.get(one);
+  const requestTwo = axios.get(two);
+
+  axios.all([requestOne, requestTwo])
+      .then(axios.spread((...responses) => {
+        const responseOne = responses[0]
+        const responseTwo = responses[1]
+        res.send({success : true , response: {stars: responseOne.data.stargazers_count, 
+                                        updated: responseOne.data.updated_at, 
+                                        watchers: responseOne.data.watchers,
+                                        forks: responseOne.data.forks,
+                                        commits: responseTwo.data[0].total}})}))
+
+      .catch(errors => {
+        res.send({success:false, message: error.message})
+      })
 
 });
 
